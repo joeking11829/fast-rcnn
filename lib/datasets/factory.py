@@ -10,6 +10,7 @@
 __sets = {}
 
 import datasets.pascal_voc
+import datasets.hand5
 import numpy as np
 
 def _selective_search_IJCV_top_k(split, year, top_k):
@@ -20,6 +21,12 @@ def _selective_search_IJCV_top_k(split, year, top_k):
     imdb.roidb_handler = imdb.selective_search_IJCV_roidb
     imdb.config['top_k'] = top_k
     return imdb
+
+# Set up HandDataset using selective search "fast" mode
+hand5_devkit_path = '/home/joe/NvidiaDIGITSv2/fast-rcnn/data/HandDataset'
+for split in ['trainval', 'test']:
+    name = '{}_{}'.format('hand5', split)
+    __sets[name] = (lambda split=split: datasets.hand5(split, hand5_devkit_path))
 
 # Set up voc_<year>_<split> using selective search "fast" mode
 for year in ['2007', '2012']:

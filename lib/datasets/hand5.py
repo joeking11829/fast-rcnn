@@ -17,16 +17,15 @@ import utils.cython_bbox
 import cPickle
 import subprocess
 
-class pascal_voc(datasets.imdb):
-    def __init__(self, image_set, year, devkit_path=None):
-        datasets.imdb.__init__(self, 'voc_' + year + '_' + image_set)
-        self._year = year
+class hand5(datasets.imdb):
+    def __init__(self, image_set, devkit_path=None):
+        datasets.imdb.__init__(self, 'hand5' + '_' + image_set)
         self._image_set = image_set
         self._devkit_path = self._get_default_path() if devkit_path is None \
                             else devkit_path
-        self._data_path = os.path.join(self._devkit_path, 'VOC' + self._year)
+        self._data_path = self._devkit_path
         self._classes = ('__background__', # always index 0
-                         'person')
+                         'hand5')
                          #'aeroplane', 'bicycle', 'bird', 'boat',
                          #'bottle', 'bus', 'car', 'cat', 'chair',
                          #'cow', 'diningtable', 'dog', 'horse',
@@ -44,9 +43,9 @@ class pascal_voc(datasets.imdb):
                        'top_k'    : 2000}
 
         assert os.path.exists(self._devkit_path), \
-                'VOCdevkit path does not exist: {}'.format(self._devkit_path)
+                'HandDataset path does not exist: {}'.format(self._devkit_path)
         assert os.path.exists(self._data_path), \
-                'Path does not exist: {}'.format(self._data_path)
+                'Data Path does not exist: {}'.format(self._data_path)
 
     def image_path_at(self, i):
         """
@@ -82,7 +81,7 @@ class pascal_voc(datasets.imdb):
         """
         Return the default path where PASCAL VOC is expected to be installed.
         """
-        return os.path.join(datasets.ROOT_DIR, 'data', 'VOCdevkit' + self._year)
+        return os.path.join(datasets.ROOT_DIR, 'data', 'HandDataset')
 
     def gt_roidb(self):
         """
@@ -121,7 +120,7 @@ class pascal_voc(datasets.imdb):
             print '{} ss roidb loaded from {}'.format(self.name, cache_file)
             return roidb
 
-        if int(self._year) == 2007 or self._image_set != 'test':
+        if self._image_set != 'test':
             gt_roidb = self.gt_roidb()
             ss_roidb = self._load_selective_search_roidb(gt_roidb)
             roidb = datasets.imdb.merge_roidbs(gt_roidb, ss_roidb)
@@ -176,7 +175,7 @@ class pascal_voc(datasets.imdb):
     def _load_selective_search_IJCV_roidb(self, gt_roidb):
         IJCV_path = os.path.abspath(os.path.join(self.cache_path, '..',
                                                  'selective_search_IJCV_data',
-                                                 'voc_' + self._year))
+                                                 'hand5'))
         assert os.path.exists(IJCV_path), \
                'Selective search IJCV data not found at: {}'.format(IJCV_path)
 
@@ -236,7 +235,7 @@ class pascal_voc(datasets.imdb):
             comp_id += '-{}'.format(os.getpid())
 
         # VOCdevkit/results/VOC2007/Main/comp4-44503_det_test_aeroplane.txt
-        path = os.path.join(self._devkit_path, 'results', 'VOC' + self._year,
+        path = os.path.join(self._devkit_path, 'results', 'HAND5',
                             'Main', comp_id + '_')
         for cls_ind, cls in enumerate(self.classes):
             if cls == '__background__':
@@ -283,6 +282,6 @@ class pascal_voc(datasets.imdb):
             self.config['cleanup'] = True
 
 if __name__ == '__main__':
-    d = datasets.pascal_voc('trainval', '2007')
+    d = datasets.hand5('trainval')
     res = d.roidb
     from IPython import embed; embed()

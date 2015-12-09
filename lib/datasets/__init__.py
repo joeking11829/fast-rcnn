@@ -7,6 +7,7 @@
 
 from .imdb import imdb
 from .pascal_voc import pascal_voc
+from .hand5 import hand5
 from . import factory
 
 import os.path as osp
@@ -15,7 +16,7 @@ ROOT_DIR = osp.join(osp.dirname(__file__), '..', '..')
 # We assume your matlab binary is in your path and called `matlab'.
 # If either is not true, just add it to your path and alias it as matlab, or
 # you could change this file.
-MATLAB = 'matlab'
+#MATLAB = 'matlab'
 
 # http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python
 def _which(program):
@@ -36,7 +37,9 @@ def _which(program):
 
     return None
 
+"""
 if _which(MATLAB) is None:
     msg = ("MATLAB command '{}' not found. "
            "Please add '{}' to your PATH.").format(MATLAB, MATLAB)
     raise EnvironmentError(msg)
+"""
