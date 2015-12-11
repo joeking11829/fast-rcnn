@@ -61,8 +61,7 @@ class Fast_RCNN_Caffe(object):
             self._obj_proposal_module = obj_proposal_module
         
         #Config Caffe Model Path
-        self._prototxt = os.path.join(cfg.ROOT_DIR, 'models', NETS[self._model][0],
-                            'test.prototxt')
+        self._prototxt = os.path.join(cfg.ROOT_DIR, 'models', NETS[self._model][0], 'test.prototxt')
         self._caffemodel = os.path.join(cfg.ROOT_DIR, 'data', 'fast_rcnn_models',
                             NETS[self._model][1])
 
@@ -80,7 +79,9 @@ class Fast_RCNN_Caffe(object):
         self._net = caffe.Net(self._prototxt, self._caffemodel, caffe.TEST)
         print '\n\nLoaded network {:s}'.format(self._caffemodel)
     
+
     def detect_object(self, image):
+        #print 'fast_rcnn_caffe call'
         return self.internal_detect_object(image, ('hand5',))
 
     def internal_detect_object(self, image, classes):
@@ -151,7 +152,7 @@ class Fast_RCNN_Caffe(object):
             cv2.putText(img, class_name + ' ' + str(score), (bbox[0], bbox[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
         """
 
-
+"""
 #Test Code for Camera
 if __name__ == '__main__':
     #Use OpenCV get Camera Image
@@ -214,7 +215,7 @@ if __name__ == '__main__':
         cap.release()
         
     cv2.destroyAllWindows()
-
+"""
 
 """
 #Test Code for Image

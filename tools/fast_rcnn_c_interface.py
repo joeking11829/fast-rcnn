@@ -9,14 +9,11 @@ Demo script showing detections in sample images.
 
 See README.md for installation instructions before running.
 """
-import sys
-sys.path.append('/usr/local/lib/python2.7/site-packages')
-
-import _init_paths
-from utils.timer import Timer
 import numpy as np
-import os, sys, cv2
+import os, sys
+import cv2
 import os.path as osp
+from timer import Timer
 
 from fast_rcnn_caffe import Fast_RCNN_Caffe
 
@@ -24,12 +21,15 @@ from fast_rcnn_caffe import Fast_RCNN_Caffe
 ROOT_DIR = osp.split(osp.realpath(__file__))[0]
 
 class Fast_RCNN_C_Interface(object):
+    #_fast_rcnn = None;
     def __init__(self):
         #Caffe Setting
         self._fast_rcnn = Fast_RCNN_Caffe()
-    def detect_object(self, images):
+        print 'Load Fast_RCNN_C_Interface is Done...'
+    
+    def detect_object(self, image):
         # Run Fast-RCNN
-        class_detections = self._fast_rcnn.detect_object(img)
+        class_detections = self._fast_rcnn.detect_object(image)
         # Target Class = 'hand5'
         if class_detections.has_key('hand5'):
             hand5_detections = class_detections['hand5']
@@ -43,10 +43,11 @@ class Fast_RCNN_C_Interface(object):
                     area_max = area
                     hand5_max = detection.astype(np.uint16)
             print 'hand5 Max detections: {}'.format(hand5_max)
-            return (hand5_max[0], hand5_max[1], hand5_max[2], hand5_max[3])
+            return hand5_max[0], hand5_max[1], hand5_max[2], hand5_max[3]
         else:
-            return (0, 0, 0, 0)
-    
+            return int(0), int(0), int(0), int(0)
+
+"""
 #Test Code for Camera
 if __name__ == '__main__':
     #Use OpenCV get Camera Image
@@ -90,4 +91,4 @@ if __name__ == '__main__':
     if cap is not None or cap.isOpened():
         cap.release()
     cv2.destroyAllWindows()
-
+"""
