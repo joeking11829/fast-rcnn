@@ -27,7 +27,7 @@ class Selective_Search(Object_Proposals):
             img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
         rects = []
-        dlib.find_candidate_object_locations(img, rects, min_size=500)
+        dlib.find_candidate_object_locations(img, rects, min_size=250)
         proposals = []
         for k,d in enumerate(rects):
             templist = [d.left(), d.top(), d.right(), d.bottom()]

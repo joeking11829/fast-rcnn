@@ -72,7 +72,8 @@ def vis_detections(im, class_name, dets, thresh=0.5):
         #Draw the Rectangle
         cv2.rectangle(im, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 3)
         #Draw the Text
-        cv2.putText(im, class_name + ' ' + str(score), (bbox[0], bbox[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
+        cv2.putText(im, class_name + ' ' + str(score), (bbox[0], bbox[1]),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
 
         #Show Image
         #cv2.imshow("Detect Result", im)

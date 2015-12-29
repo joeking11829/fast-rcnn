@@ -29,7 +29,11 @@ class Fast_RCNN_C_Interface(object):
     
     def detect_object(self, image):
         # Run Fast-RCNN
+        #timer = Timer()
+        #timer.tic()
         class_detections = self._fast_rcnn.detect_object(image)
+        #timer.toc()
+        #print 'it took {:.3f}s to Detect ONE Image !!'.format(timer.total_time)
         # Target Class = 'hand5'
         if class_detections.has_key('hand5'):
             hand5_detections = class_detections['hand5']
@@ -42,7 +46,7 @@ class Fast_RCNN_C_Interface(object):
                 if area > area_max:
                     area_max = area
                     hand5_max = detection.astype(np.uint16)
-            print 'hand5 Max detections: {}'.format(hand5_max)
+            #print 'hand5 Max detections: {}'.format(hand5_max)
             return hand5_max[0], hand5_max[1], hand5_max[2], hand5_max[3]
         else:
             return int(0), int(0), int(0), int(0)

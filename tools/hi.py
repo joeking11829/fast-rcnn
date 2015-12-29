@@ -40,9 +40,10 @@ class Ludan():
         return 'Hi Ludan'
 
     def call_fast_rcnn_frame(self, frame, height, width, channels):
-        print 'Call Fast-RCNN Frame'
-        img = np.frombuffer(frame, np.uint8)
-        img = np.reshape(img, (height, width, channels))
+        #print 'Call Fast-RCNN Frame -> height: {}  width:  {}  channels:  {}'.format(height, width, channels)
+        #print type(frame)
+        #img = np.frombuffer(frame, np.uint8)
+        img = np.reshape(frame, (height, width, channels))
         print 'Detect object from C -> reshape: {}'.format(img.shape)
         
         #Create Fast_RCNN C Interface
@@ -53,4 +54,3 @@ class Ludan():
         hand5_max_detection = self._fast_rcnn.detect_object(img)
         print 'HAND5 MAX DETECTION IS: {}'.format(hand5_max_detection)
         return hand5_max_detection
-

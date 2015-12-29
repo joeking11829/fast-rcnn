@@ -86,20 +86,20 @@ class Fast_RCNN_Caffe(object):
 
     def internal_detect_object(self, image, classes):
         # Load Object proposals
-        timer = Timer()
-        timer.tic()
+        #timer = Timer()
+        #timer.tic()
         obj_proposals = self._obj_proposal_module.get_object_proposals(image)
-        timer.toc()
+        #timer.toc()
         # Show Object proposals information
-        print 'it took {:.3f}s for image ceate {:d} obj_proposals'.format(timer.total_time, obj_proposals.shape[0])
+        #print 'it took {:.3f}s for image ceate {:d} obj_proposals'.format(timer.total_time, obj_proposals.shape[0])
 
         # Detect all object classes and regress object bounds
-        timer = Timer()
-        timer.tic()
+        #timer = Timer()
+        #timer.tic()
         scores, boxes = im_detect(self._net, image, obj_proposals)
-        timer.toc()
-        print ('Detection took {:.3f}s for '
-               '{:d} object proposals').format(timer.total_time, boxes.shape[0])
+        #timer.toc()
+        #print ('Detection took {:.3f}s for '
+        #       '{:d} object proposals').format(timer.total_time, boxes.shape[0])
 
         # Visualize detections for each class
         CONF_THRESH = 0.9
@@ -118,7 +118,7 @@ class Fast_RCNN_Caffe(object):
                               cls_scores[:, np.newaxis])).astype(np.float32)
             keep = nms(dets, NMS_THRESH)
             dets = dets[keep, :]
-            print 'All {} detections with p({} | box) >= {:.1f}'.format(cls, cls, CONF_THRESH)
+            #print 'All {} detections with p({} | box) >= {:.1f}'.format(cls, cls, CONF_THRESH)
             #get current class detect result
             detections = self.validate_detections(image, cls, dets, thresh=CONF_THRESH)
             if len(detections) is not 0:
